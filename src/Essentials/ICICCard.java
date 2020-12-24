@@ -1,6 +1,8 @@
 package Essentials;
 
-public class ICICCard implements Card{
+import java.io.Serializable;
+
+public class ICICCard implements Card, Serializable {
     private final int pinNo;
     private long accNo;
     private final String bankName;

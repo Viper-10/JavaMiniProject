@@ -1,5 +1,5 @@
 package Essentials;
-public interface Card {
+public interface Card{
     String[] bankName = new String[]{"SBI", "ICIC"};
 
     void accessGranted();

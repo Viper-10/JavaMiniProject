@@ -1,9 +1,11 @@
 package Essentials;
 
-public class SBICard implements Card{
+import java.io.Serializable;
+
+public class SBICard implements Card, Serializable {
     private final String bankName;
     private final int pinNo;
-    private long accNo;
+    private final long accNo;
     private static int s_pinNo;
     private static long s_accNo;
 

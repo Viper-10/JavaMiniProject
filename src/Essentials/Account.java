@@ -1,6 +1,8 @@
 package Essentials;
 
-public class Account {
+import java.io.Serializable;
+
+public class Account implements Serializable {
     double accBalance;
     final long accNo;
 
@@ -11,6 +13,7 @@ public class Account {
 
     public Account(long accNo) {
         this.accNo = accNo;
+        this.accBalance = 0;
     }
 
     public double getAccBalance() {

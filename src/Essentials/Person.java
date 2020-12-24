@@ -1,13 +1,10 @@
 package Essentials;
 
-public class Person{
-    protected String name;
-    protected int age;
+import java.io.Serializable;
 
-    private Person(){
-        name = null;
-        age = 0;
-    }
+public class Person{
+    private String name;
+    private int age;
 
     public Person(String name, int age) {
         this.name = name;
