@@ -10,10 +10,7 @@ public class SBICard implements Card{
     public SBICard() {
         pinNo = ++s_pinNo;
         accNo = ++s_accNo;
-<<<<<<< HEAD
         bankName = "SBI";
-=======
->>>>>>> 37c94c7664d96e83cf6514e22fdfd499c9282c0b
     }
 
     @Override
@@ -27,7 +24,6 @@ public class SBICard implements Card{
     }
 
     @Override
-<<<<<<< HEAD
     public String getBankName() {
         return bankName;
     }
@@ -36,12 +32,6 @@ public class SBICard implements Card{
     public void accessGranted(){
         System.out.println("ACCESS GRANTED");
     }
-=======
-    public void accessGranted(){
-        System.out.println("ACCESS GRANTED");
-    }
-
->>>>>>> 37c94c7664d96e83cf6514e22fdfd499c9282c0b
 
 
     @Override
@@ -52,10 +42,6 @@ public class SBICard implements Card{
             return false;
         }
 
-<<<<<<< HEAD
         return true;
-=======
-
->>>>>>> 37c94c7664d96e83cf6514e22fdfd499c9282c0b
     }
 }

@@ -21,7 +21,7 @@ public class Pair {
     public void setBankName(String bankName) {
         this.bankName = bankName;
     }
-
+ 
     public long getAccNo() {
         return accNo;
     }
