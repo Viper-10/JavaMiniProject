@@ -2,7 +2,8 @@ package Essentials;
 
 import java.io.Serializable;
 
-public class Person{
+public class Person  implements Serializable {
+    private static final long serialVersionUID = 330484899860391459L;
     private String name;
     private int age;
 

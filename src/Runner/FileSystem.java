@@ -15,14 +15,20 @@ public class FileSystem {
 
     public static void StoreDataToFile(){
         try{
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(CardFile));
+            FileOutputStream file = new FileOutputStream(CardFile);
+            ObjectOutputStream out = new ObjectOutputStream(file);
             out.writeObject(Main.listOfCards);
+            file.close();
 
-            out = new ObjectOutputStream(new FileOutputStream(AccountFile));
+            file = new FileOutputStream(AccountFile);
+            out = new ObjectOutputStream(file);
             out.writeObject(Main.listOfAccounts);
+            file.close();
 
-            out = new ObjectOutputStream(new FileOutputStream(Customers));
+            file = new FileOutputStream(Customers);
+            out = new ObjectOutputStream(file);
             out.writeObject(Main.allCustomers);
+            file.close();
 
             out.close();
         }

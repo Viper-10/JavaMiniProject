@@ -14,8 +14,24 @@ public class Main {
 
     public static void main(String[] args) {
 
+        FileSystem.RetriveDataFromFile();
+        //setting up fresh account number to generate
+        long newNum = 1;
+        for(Pair p:listOfAccounts.keySet()){
+            newNum = Math.max(newNum,listOfAccounts.get(p).getAccNo());
+        }
+        newNum++;
+        ICICCard.setS_accNo(newNum);
+        SBICard.setS_accNo(newNum);
+
         while(true){
-            FileSystem.RetriveDataFromFile();
+
+            for(Pair p:listOfAccounts.keySet())
+                System.out.println(p.bankName + " " + listOfAccounts.get(p).getAccNo());
+            System.out.println("******************************");
+            for(Customer c:allCustomers){
+                System.out.println(c.getName());
+            }
             System.out.println("Select an option: ");
             System.out.println("1. Create Account");
             System.out.println("2. Withdraw");

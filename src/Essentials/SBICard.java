@@ -3,6 +3,7 @@ package Essentials;
 import java.io.Serializable;
 
 public class SBICard implements Card, Serializable {
+    private static final long serialVersionUID = -1572058113136644630L;
     private final String bankName;
     private final int pinNo;
     private final long accNo;
@@ -14,6 +15,13 @@ public class SBICard implements Card, Serializable {
         accNo = ++s_accNo;
         bankName = "SBI";
     }
+
+    public SBICard(ICICCard copy){
+        this.pinNo = copy.getPinNo();
+        this.accNo = copy.getAccNo();
+        this.bankName = copy.getBankName();
+    }
+
 
     @Override
     public int getPinNo() {
@@ -45,5 +53,13 @@ public class SBICard implements Card, Serializable {
         }
 
         return true;
+    }
+
+    public static void setS_pinNo(int s_pinNo) {
+        SBICard.s_pinNo = s_pinNo;
+    }
+
+    public static void setS_accNo(long s_accNo) {
+        SBICard.s_accNo = s_accNo;
     }
 }

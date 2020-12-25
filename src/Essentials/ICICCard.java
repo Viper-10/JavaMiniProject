@@ -3,8 +3,9 @@ package Essentials;
 import java.io.Serializable;
 
 public class ICICCard implements Card, Serializable {
+    private static final long serialVersionUID = 6470249712448579374L;
     private final int pinNo;
-    private long accNo;
+    private final long accNo;
     private final String bankName;
 
     private static int s_pinNo;
@@ -14,6 +15,12 @@ public class ICICCard implements Card, Serializable {
         pinNo = ++s_pinNo;
         accNo = ++s_accNo;
         bankName = "ICIC";
+    }
+
+    public ICICCard(ICICCard copy){
+        this.pinNo = copy.getPinNo();
+        this.accNo = copy.getAccNo();
+        this.bankName = copy.getBankName();
     }
 
     @Override
@@ -44,5 +51,13 @@ public class ICICCard implements Card, Serializable {
     @Override
     public long getAccNo() {
         return accNo;
+    }
+
+    public static void setS_pinNo(int s_pinNo) {
+        ICICCard.s_pinNo = s_pinNo;
+    }
+
+    public static void setS_accNo(long s_accNo) {
+        ICICCard.s_accNo = s_accNo;
     }
 }
