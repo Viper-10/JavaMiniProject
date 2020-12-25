@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class ICICCard implements Card, Serializable {
     private static final long serialVersionUID = 6470249712448579374L;
-    private final int pinNo;
+    private int pinNo;
     private final long accNo;
     private final String bankName;
 
@@ -21,6 +21,10 @@ public class ICICCard implements Card, Serializable {
         this.pinNo = copy.getPinNo();
         this.accNo = copy.getAccNo();
         this.bankName = copy.getBankName();
+    }
+
+    public void setPinNo(int pinNo) {
+        this.pinNo = pinNo;
     }
 
     @Override

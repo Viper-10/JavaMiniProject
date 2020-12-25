@@ -5,7 +5,7 @@ import java.io.Serializable;
 public class SBICard implements Card, Serializable {
     private static final long serialVersionUID = -1572058113136644630L;
     private final String bankName;
-    private final int pinNo;
+    private int pinNo;
     private final long accNo;
     private static int s_pinNo;
     private static long s_accNo;
@@ -22,6 +22,9 @@ public class SBICard implements Card, Serializable {
         this.bankName = copy.getBankName();
     }
 
+    public void setPinNo(int pinNo) {
+        this.pinNo = pinNo;
+    }
 
     @Override
     public int getPinNo() {
