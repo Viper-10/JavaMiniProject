@@ -1,6 +1,6 @@
 package Runner;
 
-abstract class Colors {
+public abstract class Colors {
     /*
     public static String ANSI_RED = "\033[31;1m";
     public static String ANSI_RED_END = "\033[0m";

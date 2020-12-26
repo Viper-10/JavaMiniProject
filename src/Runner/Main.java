@@ -30,7 +30,7 @@ public class Main {
         while(true){
 
             try{
-                Thread.sleep(2000);
+                Thread.sleep(3000);
             } catch(InterruptedException ie){
                 System.out.println(ie);
             }
@@ -65,9 +65,9 @@ public class Main {
                 FileSystem.StoreDataToFile();
                 break;
             }
-
             switch(option){
                 case 1 :
+                    String bankName = null;
                     System.out.print(TEXT_CYAN + "Enter customer name : ");
                     input.nextLine();
                     String name = input.nextLine();
@@ -79,16 +79,16 @@ public class Main {
 
                     while (!correctOption) {
                         System.out.println(TEXT_BLUE + "\nChoose Bank \n1 for SBI\n2 for ICIC ");
-                        System.out.println();
-
                         int secondOption = input.nextInt();
 
                         switch (secondOption) {
                             case 1 -> {
+                                bankName = "SBI";
                                 tempC = new SBICard();
                                 correctOption = true;
                             }
                             case 2 -> {
+                                bankName = "ICIC";
                                 tempC = new ICICCard();
                                 correctOption = true;
                             }
@@ -98,7 +98,13 @@ public class Main {
                     }
 
                     System.out.println(TEXT_RESET + "\n\nAccount Created successfully... ");
-                    System.out.print("Your Account Number is : " + tempC.getAccNo());
+
+                    if (bankName == "SBI") {
+                        SBI.welcome();
+                    } else {
+                        ICIC.welcome();
+                    }
+                    System.out.print("\n\nYour Account Number is : " + tempC.getAccNo());
                     System.out.println("\nYour Pin Number is : " + tempC.getPinNo());
 
                     // Creating account and customer
@@ -111,7 +117,6 @@ public class Main {
                     listOfCards.put(new Pair(tempC.getBankName(), tempC.getAccNo()), tempC);
 
                     FileSystem.StoreDataToFile();
-
                     break;
 
                 case 2:

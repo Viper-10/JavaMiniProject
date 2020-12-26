@@ -8,11 +8,7 @@ import static Runner.Main.listOfAccounts;
 
 public abstract class Bank{
 
-    abstract void welcome();
-
-
-
-    /////////////////// Function to withdraw amount from bank///////////////////////
+        /////////////////// Function to withdraw amount from bank///////////////////////
     public static void withDraw() {
         Account accessedAccount = Check.checkCardCredentials();
         if (accessedAccount == null){

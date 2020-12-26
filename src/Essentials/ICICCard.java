@@ -1,6 +1,7 @@
 package Essentials;
 
 import java.io.Serializable;
+import static Runner.Colors.*;
 
 public class ICICCard implements Card, Serializable {
     private static final long serialVersionUID = 6470249712448579374L;
@@ -29,13 +30,13 @@ public class ICICCard implements Card, Serializable {
 
     @Override
     public void accessGranted() {
-        System.out.println("ACCESS GRANTED");
+        System.out.println(TEXT_GREEN + "ACCESS GRANTED" + TEXT_RESET);
     }
 
     @Override
     public boolean checkDetails(int pinNo) {
         if(pinNo != this.pinNo) {
-            System.out.println("ACCESS DENIED, WRONG PIN NUMBER!!!");
+            System.out.println(TEXT_RED + "ACCESS DENIED , WRONG PIN NUMBER!!!" + TEXT_RESET);
             return false;
         }
 
