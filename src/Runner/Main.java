@@ -1,12 +1,14 @@
 package Runner;
 
+import Essentials.*;
+
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Scanner;
-import Essentials.*;
 
 import static Runner.Colors.*;
+
 
 public class Main {
     public static Scanner input = new Scanner(System.in);
@@ -118,12 +120,15 @@ public class Main {
                             boolean validAmount = false;
                             System.out.println("Enter amount to withdraw:");
                             while (!validAmount){
-                                int amount = input.nextInt();
+                                double amount = input.nextDouble();
                                 if (amount==0) {
                                     System.out.println("Aborting withdraw process!!!");
                                     break;
                                 }
-                                if (accessedAccount.getAccBalance()>=amount){
+                                double currentBalance = accessedAccount.getAccBalance();
+                                if (currentBalance>=amount){
+                                    accessedAccount.setAccBalance(currentBalance - amount);
+                                    listOfAccounts.put(new Pair(Check.bankName, Check.accNo), accessedAccount);
                                     System.out.println("Amount "+amount+" successfully withdrawn!");
                                     validAmount = true;
                                 }
