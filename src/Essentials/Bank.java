@@ -90,6 +90,40 @@ public abstract class Bank{
 
     /////////////////// Function to transfer amount to another account///////////////////////
     public static void transfer(){
+        Account accessedAccount = Check.checkCardCredentials();
+
+        if (accessedAccount != null){
+            Account receiverAccount = Check.checkTransferAccountCredentials();
+
+            if (receiverAccount != null){
+                boolean validAmount = false;
+                System.out.println("Enter amount to be transferred:");
+
+                while (!validAmount) {
+                    double transferAmount = Main.input.nextDouble();
+
+                    if (transferAmount==0) {
+                        System.out.println("Aborting withdraw process!!!");
+                        break;
+                    }
+
+                    double currentBalance = accessedAccount.getAccBalance();
+                    double currentReceiverBalance = receiverAccount.getAccBalance();
+                    if (currentBalance>=transferAmount){
+                        receiverAccount.setAccBalance(currentReceiverBalance + transferAmount);
+                        accessedAccount.setAccBalance(currentBalance - transferAmount);
+                        listOfAccounts.replace(new Pair(Check.bankName, Check.accNo), accessedAccount);
+                        listOfAccounts.replace(new Pair(Check.receiverBankName, Check.receiverAccountNo), receiverAccount);
+                        System.out.println("Amount of Rs. "+transferAmount+" successfully transferred!");
+                        validAmount = true;
+                    }
+                    else{
+                        System.out.println("Your account balance is lower than the entered amount.");
+                        System.out.println("Enter an valid amount, or press 0 to exit:");
+                    }
+                }
+            }
+        }
 
     }
     ///////////////////////////////////////////////////////////////////////////////////////////

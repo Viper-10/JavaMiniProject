@@ -128,8 +128,12 @@ public class Main {
                     break;
 
                 case 5 :
-                    Check.checkCardCredentials();
+                    Bank.transfer();
+                    FileSystem.StoreDataToFile();
                     break;
+
+                default:
+                    System.out.println("Enter a valid option!");
 
             }
         }
