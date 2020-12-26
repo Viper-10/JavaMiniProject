@@ -8,5 +8,10 @@ public interface Card{
     int getPinNo();
     String getBankName();
 
+    public void withDraw();
+    public void deposit();
+    public void transfer();
+    public void resetPin();
+    public Account getAcc();
 
 }

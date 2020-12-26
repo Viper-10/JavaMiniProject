@@ -1,5 +1,6 @@
 package Essentials;
 
+
 import java.io.Serializable;
 
 public class SBICard implements Card, Serializable {
@@ -64,5 +65,30 @@ public class SBICard implements Card, Serializable {
 
     public static void setS_accNo(long s_accNo) {
         SBICard.s_accNo = s_accNo;
+    }
+
+    @Override
+    public void withDraw() {
+
+    }
+
+    @Override
+    public void deposit() {
+
+    }
+
+    @Override
+    public void transfer() {
+
+    }
+
+    @Override
+    public void resetPin() {
+
+    }
+
+    @Override
+    public Account getAcc() {
+        return null;
     }
 }
