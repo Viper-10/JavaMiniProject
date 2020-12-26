@@ -50,12 +50,9 @@ public abstract class Bank{
 
 
 
-
     /////////////////// Function to deposit amount to bank///////////////////////
     public static void deposit() {
-
         Account accessedAccount = Check.checkCardCredentials();
-
         if (accessedAccount == null){
         }
 
@@ -67,7 +64,6 @@ public abstract class Bank{
             System.out.println("An amount of " + depositAmount + " Rs has been deposited successfully!!!");
             listOfAccounts.replace(new Pair(Check.bankName, Check.accNo), accessedAccount);
         }
-
     }
     ///////////////////////////////////////////////////////////////////////////////////////////
 

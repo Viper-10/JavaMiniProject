@@ -35,14 +35,14 @@ public class Main {
                 System.out.println(ie);
             }
 
-            System.out.println(TEXT_CYAN + "\n\nEXISTING ACCOUNTS\n");
+            System.out.println(TEXT_RED + "\n\nALREADY EXISTING ACCOUNTS\n");
             for(Pair p:listOfAccounts.keySet())
-                System.out.println(TEXT_YELLOW + "BANK NAME : " + TEXT_WHITE + p.bankName + " " + TEXT_YELLOW + " ACCOUNT NUMBER : " + TEXT_WHITE + listOfAccounts.get(p).getAccNo());
+                System.out.println(TEXT_YELLOW + "Bank Name: " + TEXT_WHITE + p.bankName + " " + TEXT_YELLOW + " \tAccount Number : " + TEXT_WHITE + listOfAccounts.get(p).getAccNo());
 
             System.out.println("\n");
 
             for(Customer c:allCustomers){
-                System.out.println(TEXT_YELLOW + "CUSTOMER NAME : " + TEXT_WHITE + c.getName() + TEXT_YELLOW + " --> ACCOUNT NUMBER : " + TEXT_WHITE + c.getAcc().getAccNo());
+                System.out.println(TEXT_YELLOW + "Customer Name  : " + TEXT_WHITE + c.getName() + TEXT_YELLOW + " \t--> Account Number: " + TEXT_WHITE + c.getAcc().getAccNo());
             }
 
             System.out.println("\n");
@@ -56,9 +56,11 @@ public class Main {
             System.out.println("4. Check balance");
             System.out.println("5. Transfer");
             System.out.println("6. Reset Pin");
-            System.out.println("7. Exit\n\n" + TEXT_RESET);
+            System.out.println("7. Exit\n" + TEXT_RESET);
 
             int option = input.nextInt();
+            System.out.println();
+
             if(option == 7) {
                 FileSystem.StoreDataToFile();
                 break;
@@ -66,7 +68,7 @@ public class Main {
 
             switch(option){
                 case 1 :
-                    System.out.print(TEXT_RED + "Enter customer name : ");
+                    System.out.print(TEXT_CYAN + "Enter customer name : ");
                     input.nextLine();
                     String name = input.nextLine();
                     System.out.print("\nEnter customer age : ");
@@ -77,6 +79,8 @@ public class Main {
 
                     while (!correctOption) {
                         System.out.println(TEXT_BLUE + "\nChoose Bank \n1 for SBI\n2 for ICIC ");
+                        System.out.println();
+
                         int secondOption = input.nextInt();
 
                         switch (secondOption) {
