@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Scanner;
 import Essentials.*;
 
+import static Runner.Colors.*;
+
 public class Main {
     public static Scanner input = new Scanner(System.in);
     public static Map<Pair, Account> listOfAccounts = new HashMap<>();
@@ -20,25 +22,38 @@ public class Main {
         for(Pair p:listOfAccounts.keySet()){
             newNum = Math.max(newNum,listOfAccounts.get(p).getAccNo());
         }
-        newNum++;
         ICICCard.setS_accNo(newNum);
         SBICard.setS_accNo(newNum);
 
         while(true){
 
-            for(Pair p:listOfAccounts.keySet())
-                System.out.println(p.bankName + " " + listOfAccounts.get(p).getAccNo());
-            System.out.println("******************************");
-            for(Customer c:allCustomers){
-                System.out.println(c.getName());
+            try{
+                Thread.sleep(2000);
+            } catch(InterruptedException ie){
+                System.out.println(ie);
             }
-            System.out.println("Select an option: ");
+
+            System.out.println(TEXT_CYAN + "\n\nEXISTING ACCOUNTS\n");
+            for(Pair p:listOfAccounts.keySet())
+                System.out.println(TEXT_YELLOW + "BANK NAME : " + TEXT_WHITE + p.bankName + " " + TEXT_YELLOW + " ACCOUNT NUMBER : " + TEXT_WHITE + listOfAccounts.get(p).getAccNo());
+
+            System.out.println("\n");
+
+            for(Customer c:allCustomers){
+                System.out.println(TEXT_YELLOW + "CUSTOMER NAME : " + TEXT_WHITE + c.getName() + TEXT_YELLOW + " --> ACCOUNT NUMBER : " + TEXT_WHITE + c.getAcc().getAccNo());
+            }
+
+            System.out.println("\n");
+            System.out.println("******************************\n\n");
+
+
+            System.out.println(TEXT_PURPLE + "Select an option: ");
             System.out.println("1. Create Account");
             System.out.println("2. Withdraw");
             System.out.println("3. Deposit");
             System.out.println("4. Transfer");
             System.out.println("5. Reset Pin");
-            System.out.println("6. Cancel");
+            System.out.println("6. Cancel\n\n" + TEXT_RESET);
 
             int option = input.nextInt();
             if(option == 6) {
@@ -48,17 +63,17 @@ public class Main {
 
             switch(option){
                 case 1 :
-                    System.out.println("Enter customer name : ");
+                    System.out.print(TEXT_RED + "Enter customer name : ");
                     input.nextLine();
                     String name = input.nextLine();
-                    System.out.println("Enter customer age : ");
+                    System.out.print("\nEnter customer age : ");
                     int age = input.nextInt();
 
                     Card tempC = null;
                     boolean correctOption = false;
 
                     while (!correctOption) {
-                        System.out.println("\nChoose Bank \n1. SBI\n2. ICIC");
+                        System.out.println(TEXT_BLUE + "\nChoose Bank \n1 for SBI\n2 for ICIC ");
                         int secondOption = input.nextInt();
 
                         switch (secondOption) {
@@ -71,23 +86,24 @@ public class Main {
                                 correctOption = true;
                             }
                             default ->
-                                System.out.println("\nSelect Correct Option!");
+                                System.out.println(TEXT_RESET + "\nSelect an Appropriate Option!");
 
                         }
                     }
 
-                    System.out.println("Account Created successfully... ");
-                    System.out.println("Your Account Number is : " + tempC.getAccNo());
-                    System.out.println("Your Pin Number is : " + tempC.getPinNo());
-                    System.out.println("\n");
+                    System.out.println(TEXT_RESET + "\n\nAccount Created successfully... ");
+                    System.out.print("Your Account Number is : " + tempC.getAccNo());
+                    System.out.println("\nYour Pin Number is : " + tempC.getPinNo());
 
-                    listOfCards.put(new Pair(tempC.getBankName(), tempC.getAccNo()), tempC);
+                    // Creating account and customer
+
                     Account acc = new Account(tempC.getAccNo());
-                    //Creating a customer
                     Customer customer = new Customer(name,age,tempC,acc);
+
                     allCustomers.add(customer);
                     listOfAccounts.put(new Pair(tempC.getBankName(), tempC.getAccNo()), acc);
-                    System.out.println(listOfCards.size());
+                    listOfCards.put(new Pair(tempC.getBankName(), tempC.getAccNo()), tempC);
+
                     break;
 
                 case 2 :
