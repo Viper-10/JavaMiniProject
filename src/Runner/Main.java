@@ -44,7 +44,7 @@ public class Main {
             }
 
             System.out.println("\n");
-            System.out.println("******************************\n\n");
+            System.out.println("******************************************************************\n\n");
 
 
             System.out.println(TEXT_PURPLE + "Select an option: ");
@@ -87,7 +87,6 @@ public class Main {
                             }
                             default ->
                                 System.out.println(TEXT_RESET + "\nSelect an Appropriate Option!");
-
                         }
                     }
 
