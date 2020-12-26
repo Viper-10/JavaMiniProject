@@ -55,7 +55,7 @@ public class Main {
             System.out.println("3. Deposit");
             System.out.println("4. Transfer");
             System.out.println("5. Reset Pin");
-            System.out.println("6. Cancel\n\n" + TEXT_RESET);
+            System.out.println("6. Exit\n\n" + TEXT_RESET);
 
             int option = input.nextInt();
             if(option == 6) {
@@ -105,6 +105,8 @@ public class Main {
                     listOfAccounts.put(new Pair(tempC.getBankName(), tempC.getAccNo()), acc);
                     listOfCards.put(new Pair(tempC.getBankName(), tempC.getAccNo()), tempC);
 
+                    FileSystem.StoreDataToFile();
+
                     break;
 
                 case 2 :
@@ -120,16 +122,16 @@ public class Main {
                             boolean validAmount = false;
                             System.out.println("Enter amount to withdraw:");
                             while (!validAmount){
-                                double amount = input.nextDouble();
-                                if (amount==0) {
+                                double withdrawAmount = input.nextDouble();
+                                if (withdrawAmount==0) {
                                     System.out.println("Aborting withdraw process!!!");
                                     break;
                                 }
                                 double currentBalance = accessedAccount.getAccBalance();
-                                if (currentBalance>=amount){
-                                    accessedAccount.setAccBalance(currentBalance - amount);
-                                    listOfAccounts.put(new Pair(Check.bankName, Check.accNo), accessedAccount);
-                                    System.out.println("Amount "+amount+" successfully withdrawn!");
+                                if (currentBalance>=withdrawAmount){
+                                    accessedAccount.setAccBalance(currentBalance - withdrawAmount);
+                                    listOfAccounts.replace(new Pair(Check.bankName, Check.accNo), accessedAccount);
+                                    System.out.println("Amount "+withdrawAmount+" successfully withdrawn!");
                                     validAmount = true;
                                 }
                                 else{
@@ -141,10 +143,28 @@ public class Main {
                         }
                     }
 
+                    FileSystem.StoreDataToFile();
+
                     break;
 
                 case 3 :
-                    Check.checkCardCredentials();
+                    Account accessedAccount2 = Check.checkCardCredentials();
+
+                    if (accessedAccount2 == null){
+                        break;
+                    }
+
+                    else{
+                        System.out.println("Enter amount to deposit:");
+                        double depositAmount = input.nextDouble();
+                        double currentBalance = accessedAccount2.getAccBalance();
+                        accessedAccount2.setAccBalance(currentBalance + depositAmount);
+                        System.out.println("An amount of " + depositAmount + " Rs has been deposited successfully!!!");
+                        listOfAccounts.replace(new Pair(Check.bankName, Check.accNo), accessedAccount2);
+                    }
+
+                    FileSystem.StoreDataToFile();
+
                     break;
 
                 case 4 :
