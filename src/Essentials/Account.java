@@ -6,7 +6,6 @@ public class Account implements Serializable {
     private static final long serialVersionUID = -2745912589877904941L;
     double accBalance;
     final long accNo;
-
     public Account(double accBalance, long accNo) {
         this.accBalance = accBalance;
         this.accNo = accNo;

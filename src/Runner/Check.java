@@ -1,9 +1,10 @@
 package Runner;
 import Essentials.Card;
+import Essentials.Account;
 import Runner.Main.*;
 
 public class Check {
-    static boolean checkCardCredentials(){
+    static Account checkCardCredentials(){
         System.out.print("\nEnter your Bank Name : ");
         String bankName = Main.input.next();
 
@@ -16,19 +17,17 @@ public class Check {
             int pinNo = Main.input.nextInt();
 
             if(c.checkDetails(pinNo)) {
-
                 c.accessGranted();
+                return Main.listOfAccounts.get(new Pair(bankName, accNo));
             }else{
 
-                return false;
+                return null;
             }
 
         }else{
             System.out.println("The said Account Number doesn't exist!!!!");
-            return false;
+            return null;
         }
-
-        return true;
     }
 
     static long getAccNo(){
