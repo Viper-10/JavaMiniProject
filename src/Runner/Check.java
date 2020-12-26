@@ -3,9 +3,9 @@ import Essentials.Account;
 import Essentials.Card;
 
 public class Check {
-    static String bankName;
-    static long accNo;
-    static Account checkCardCredentials(){
+    public static String bankName;
+    public static long accNo;
+    public static Account checkCardCredentials(){
         System.out.print("\nEnter your Bank Name : ");
         bankName = Main.input.next();
 

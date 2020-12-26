@@ -67,20 +67,6 @@ public class SBICard implements Card, Serializable {
         SBICard.s_accNo = s_accNo;
     }
 
-    @Override
-    public void withDraw() {
-
-    }
-
-    @Override
-    public void deposit() {
-
-    }
-
-    @Override
-    public void transfer() {
-
-    }
 
     @Override
     public void resetPin() {

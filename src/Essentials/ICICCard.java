@@ -65,20 +65,6 @@ public class ICICCard implements Card, Serializable {
         ICICCard.s_accNo = s_accNo;
     }
 
-    @Override
-    public void withDraw() {
-
-    }
-
-    @Override
-    public void deposit() {
-
-    }
-
-    @Override
-    public void transfer() {
-
-    }
 
     @Override
     public void resetPin() {

@@ -110,12 +110,17 @@ public class Main {
                     break;
 
                 case 2:
-                    Check.checkCardCredentials();
+                    Bank.withDraw();
 
+                    FileSystem.StoreDataToFile();
                     break;
 
                 case 3 :
-                        Check.checkCardCredentials();
+                    Bank.deposit();
+
+                    FileSystem.StoreDataToFile();
+
+                    break;
 
                 case 4 :
                     Check.checkCardCredentials();
