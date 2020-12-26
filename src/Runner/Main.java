@@ -53,12 +53,13 @@ public class Main {
             System.out.println("1. Create Account");
             System.out.println("2. Withdraw");
             System.out.println("3. Deposit");
-            System.out.println("4. Transfer");
-            System.out.println("5. Reset Pin");
-            System.out.println("6. Exit\n\n" + TEXT_RESET);
+            System.out.println("4. Check balance");
+            System.out.println("5. Transfer");
+            System.out.println("6. Reset Pin");
+            System.out.println("7. Exit\n\n" + TEXT_RESET);
 
             int option = input.nextInt();
-            if(option == 6) {
+            if(option == 7) {
                 FileSystem.StoreDataToFile();
                 break;
             }
@@ -123,7 +124,7 @@ public class Main {
                     break;
 
                 case 4 :
-                    Check.checkCardCredentials();
+                    Bank.checkBalance();
                     break;
 
                 case 5 :

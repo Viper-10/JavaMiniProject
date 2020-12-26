@@ -10,6 +10,9 @@ public abstract class Bank{
 
     abstract void welcome();
 
+
+
+    /////////////////// Function to withdraw amount from bank///////////////////////
     public static void withDraw() {
         Account accessedAccount = Check.checkCardCredentials();
         if (accessedAccount == null){
@@ -43,28 +46,51 @@ public abstract class Bank{
             }
         }
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////
 
-    public void transfer() {
 
-    }
 
+
+    /////////////////// Function to deposit amount to bank///////////////////////
     public static void deposit() {
 
-        Account accessedAccount2 = Check.checkCardCredentials();
+        Account accessedAccount = Check.checkCardCredentials();
 
-        if (accessedAccount2 == null){
+        if (accessedAccount == null){
         }
 
         else{
             System.out.println("Enter amount to deposit:");
             double depositAmount = Main.input.nextDouble();
-            double currentBalance = accessedAccount2.getAccBalance();
-            accessedAccount2.setAccBalance(currentBalance + depositAmount);
+            double currentBalance = accessedAccount.getAccBalance();
+            accessedAccount.setAccBalance(currentBalance + depositAmount);
             System.out.println("An amount of " + depositAmount + " Rs has been deposited successfully!!!");
-            listOfAccounts.replace(new Pair(Check.bankName, Check.accNo), accessedAccount2);
+            listOfAccounts.replace(new Pair(Check.bankName, Check.accNo), accessedAccount);
         }
 
     }
+    ///////////////////////////////////////////////////////////////////////////////////////////
 
 
+
+
+    /////////////////// Function to check current balance///////////////////////
+    public static void checkBalance() {
+        Account accessedAccount = Check.checkCardCredentials();
+        if (accessedAccount != null){
+            double currentBalance = accessedAccount.getAccBalance();
+            System.out.println("Your current balance is " + currentBalance + " Rs.");
+        }
+
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+    /////////////////// Function to transfer amount to another account///////////////////////
+    public static void transfer(){
+
+    }
+    ///////////////////////////////////////////////////////////////////////////////////////////
 }
