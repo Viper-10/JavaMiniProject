@@ -8,15 +8,18 @@ import static Runner.Main.listOfAccounts;
 
 public abstract class Bank{
 
+
         /////////////////// Function to withdraw amount from bank///////////////////////
-    public static void withDraw() {
+    /*public static void withDraw() {
         Account accessedAccount = Check.checkCardCredentials();
         if (accessedAccount == null){
+
         }
         else{
             if (accessedAccount.getAccBalance() == 0){
                 System.out.println("Your account balance is 0. You have to deposit first!");
             }
+
             else{
                 boolean validAmount = false;
                 System.out.println("Enter amount to withdraw:");
@@ -43,7 +46,6 @@ public abstract class Bank{
         }
     }
     ///////////////////////////////////////////////////////////////////////////////////////////
-
 
 
     /////////////////// Function to deposit amount to bank///////////////////////
@@ -73,7 +75,6 @@ public abstract class Bank{
             double currentBalance = accessedAccount.getAccBalance();
             System.out.println("Your current balance is " + currentBalance + " Rs.");
         }
-
     }
     ///////////////////////////////////////////////////////////////////////////////////////////
 
@@ -101,6 +102,7 @@ public abstract class Bank{
 
                     double currentBalance = accessedAccount.getAccBalance();
                     double currentReceiverBalance = receiverAccount.getAccBalance();
+
                     if (currentBalance>=transferAmount){
                         receiverAccount.setAccBalance(currentReceiverBalance + transferAmount);
                         accessedAccount.setAccBalance(currentBalance - transferAmount);
@@ -116,7 +118,6 @@ public abstract class Bank{
                 }
             }
         }
-
-    }
+    }*/
     ///////////////////////////////////////////////////////////////////////////////////////////
 }

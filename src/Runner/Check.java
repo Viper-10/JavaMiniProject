@@ -7,7 +7,7 @@ public class Check {
     public static long accNo, receiverAccountNo;
 
     /////////////////// Function to check credentials of user///////////////////////
-    public static Account checkCardCredentials(){
+    public static Card checkCardCredentials(){
         System.out.print("\nEnter your Bank Name : ");
         bankName = Main.input.next();
 
@@ -21,9 +21,8 @@ public class Check {
 
             if(card.checkDetails(pinNo)) {
                 card.accessGranted();
-                return Main.listOfAccounts.get(new Pair(bankName, accNo));
+                return Main.listOfCards.get(new Pair(bankName, accNo));
             }else{
-
                 return null;
             }
 
@@ -42,7 +41,7 @@ public class Check {
         System.out.print("\nEnter Account Number of the receiver: ");
         receiverAccountNo = getAccNo();
 
-        if(Main.listOfCards.containsKey(new Pair(receiverBankName, receiverAccountNo)) ){
+        if(Main.listOfAccounts.containsKey(new Pair(receiverBankName, receiverAccountNo)) ){
             return Main.listOfAccounts.get(new Pair(receiverBankName, receiverAccountNo));
         }
         else{

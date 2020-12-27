@@ -1,5 +1,4 @@
 package Runner;
-
 import Essentials.*;
 
 import java.util.HashMap;
@@ -48,7 +47,6 @@ public class Main {
             System.out.println("\n");
             System.out.println("******************************************************************\n\n");
 
-
             System.out.println(TEXT_PURPLE + "Select an option: ");
             System.out.println("1. Create Account");
             System.out.println("2. Withdraw");
@@ -65,6 +63,7 @@ public class Main {
                 FileSystem.StoreDataToFile();
                 break;
             }
+            Card tempC = null;
             switch(option){
                 case 1 :
                     String bankName = null;
@@ -74,7 +73,6 @@ public class Main {
                     System.out.print("\nEnter customer age : ");
                     int age = input.nextInt();
 
-                    Card tempC = null;
                     boolean correctOption = false;
 
                     while (!correctOption) {
@@ -108,7 +106,6 @@ public class Main {
                     System.out.println("\nYour Pin Number is : " + tempC.getPinNo());
 
                     // Creating account and customer
-
                     Account acc = new Account(tempC.getAccNo());
                     Customer customer = new Customer(name,age,tempC,acc);
 
@@ -120,30 +117,31 @@ public class Main {
                     break;
 
                 case 2:
-                    Bank.withDraw();
-
+                    tempC = Check.checkCardCredentials();
+                    tempC.withDraw();
                     FileSystem.StoreDataToFile();
                     break;
 
                 case 3 :
-                    Bank.deposit();
-
+                    tempC = Check.checkCardCredentials();
+                    tempC.deposit();
                     FileSystem.StoreDataToFile();
-
                     break;
 
                 case 4 :
-                    Bank.checkBalance();
+                    tempC = Check.checkCardCredentials();
+                    tempC.checkBalance();
                     break;
 
                 case 5 :
-                    Bank.transfer();
+                    tempC = Check.checkCardCredentials();
+                    Account receiverAccount = Check.checkTransferAccountCredentials();
+                    tempC.transter(receiverAccount);
                     FileSystem.StoreDataToFile();
                     break;
 
                 default:
                     System.out.println("Enter a valid option!");
-
             }
         }
     }

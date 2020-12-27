@@ -1,6 +1,4 @@
 package Essentials;
-
-
 import java.io.Serializable;
 
 public class SBICard implements Card, Serializable {
