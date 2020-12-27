@@ -136,7 +136,7 @@ public class Main {
                 case 5 :
                     tempC = Check.checkCardCredentials();
                     Account receiverAccount = Check.checkTransferAccountCredentials();
-                    tempC.transter(receiverAccount);
+                    tempC.transfer(receiverAccount);
                     FileSystem.StoreDataToFile();
                     break;
 
