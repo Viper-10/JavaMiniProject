@@ -1,8 +1,5 @@
 package Essentials;
 
-
-import java.io.Serializable;
-
 public class Customer extends Person{
     private Card c;
     private Account acc;

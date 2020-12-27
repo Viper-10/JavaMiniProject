@@ -3,19 +3,55 @@ package Essentials;
 import Runner.Check;
 import Runner.Main;
 import Runner.Pair;
-
 import static Runner.Main.listOfAccounts;
 
 public abstract class Bank{
+    public static String bankName, receiverBankName;
+    public static long accNo, receiverAccountNo;
 
+    static long getAccNo(){
+        return Main.input.nextLong();
+    }
+
+    public static Account checkTransferAccountCredentials(){
+        System.out.print("\nEnter Bank Name of the receiver: ");
+        receiverBankName = Main.input.next();
+
+        System.out.print("\nEnter Account Number of the receiver: ");
+        receiverAccountNo = getAccNo();
+
+        return Main.listOfAccounts.getOrDefault(new Pair(receiverBankName, receiverAccountNo), null);
+    }
+    public static Account checkCardCredentials(){
+        System.out.print("\nEnter your Bank Name : ");
+        bankName = Main.input.next();
+
+        System.out.print("\nEnter your Account Number : ");
+        accNo = getAccNo();
+
+        if(Main.listOfCards.containsKey(new Pair(bankName, accNo)) ){
+            Card card = Main.listOfCards.get(new Pair(bankName, accNo));
+            System.out.print("Enter the Pin Number : ");
+            int pinNo = Main.input.nextInt();
+
+            if(card.checkDetails(pinNo)) {
+                card.accessGranted();
+                return listOfAccounts.get(new Pair(bankName, accNo));
+            }else{
+                return null;
+            }
+
+        }else{
+            System.out.println("The said Account Number doesn't exist!!!!");
+            return null;
+        }
+    }
 
         /////////////////// Function to withdraw amount from bank///////////////////////
-    /*public static void withDraw() {
-        Account accessedAccount = Check.checkCardCredentials();
-        if (accessedAccount == null){
+    public static void withDraw() {
+        Account accessedAccount = checkCardCredentials();
 
-        }
-        else{
+        if(accessedAccount != null){
             if (accessedAccount.getAccBalance() == 0){
                 System.out.println("Your account balance is 0. You have to deposit first!");
             }
@@ -50,11 +86,9 @@ public abstract class Bank{
 
     /////////////////// Function to deposit amount to bank///////////////////////
     public static void deposit() {
-        Account accessedAccount = Check.checkCardCredentials();
-        if (accessedAccount == null){
-        }
+        Account accessedAccount = checkCardCredentials();
 
-        else{
+        if(accessedAccount != null){
             System.out.println("Enter amount to deposit:");
             double depositAmount = Main.input.nextDouble();
             double currentBalance = accessedAccount.getAccBalance();
@@ -70,7 +104,7 @@ public abstract class Bank{
 
     /////////////////// Function to check current balance///////////////////////
     public static void checkBalance() {
-        Account accessedAccount = Check.checkCardCredentials();
+        Account accessedAccount = checkCardCredentials();
         if (accessedAccount != null){
             double currentBalance = accessedAccount.getAccBalance();
             System.out.println("Your current balance is " + currentBalance + " Rs.");
@@ -83,10 +117,10 @@ public abstract class Bank{
 
     /////////////////// Function to transfer amount to another account///////////////////////
     public static void transfer(){
-        Account accessedAccount = Check.checkCardCredentials();
+        Account accessedAccount = checkCardCredentials();
 
         if (accessedAccount != null){
-            Account receiverAccount = Check.checkTransferAccountCredentials();
+            Account receiverAccount = checkTransferAccountCredentials();
 
             if (receiverAccount != null){
                 boolean validAmount = false;
@@ -118,6 +152,6 @@ public abstract class Bank{
                 }
             }
         }
-    }*/
+    }
     ///////////////////////////////////////////////////////////////////////////////////////////
 }

@@ -33,7 +33,6 @@ public class Check {
     }
     ///////////////////////////////////////////////////////////////////////////////////////////
 
-
     public static Account checkTransferAccountCredentials(){
         System.out.print("\nEnter Bank Name of the receiver: ");
         receiverBankName = Main.input.next();
@@ -41,14 +40,8 @@ public class Check {
         System.out.print("\nEnter Account Number of the receiver: ");
         receiverAccountNo = getAccNo();
 
-        if(Main.listOfAccounts.containsKey(new Pair(receiverBankName, receiverAccountNo)) ){
-            return Main.listOfAccounts.get(new Pair(receiverBankName, receiverAccountNo));
-        }
-        else{
-            return null;
-        }
+        return Main.listOfAccounts.getOrDefault(new Pair(receiverBankName, receiverAccountNo), null);
     }
-
 
     static long getAccNo(){
         return Main.input.nextLong();

@@ -1,7 +1,9 @@
 package Essentials;
+import java.io.Serial;
 import java.io.Serializable;
-
+import static Runner.Colors.*;
 public class SBICard implements Card, Serializable {
+    @Serial
     private static final long serialVersionUID = -1572058113136644630L;
     private final String bankName;
     private int pinNo;
@@ -42,15 +44,14 @@ public class SBICard implements Card, Serializable {
 
     @Override
     public void accessGranted(){
-        System.out.println("ACCESS GRANTED");
+        System.out.println(TEXT_GREEN + "ACCESS GRANTED" + TEXT_RESET);
     }
-
 
     @Override
     public boolean checkDetails(int pinNo){
 
         if(pinNo != this.pinNo) {
-            System.out.println("ACCESS DENIED, WRONG PIN NUMBER!!!");
+            System.out.println(TEXT_RED + "ACCESS DENIED, WRONG PIN NUMBER!!!" + TEXT_RESET );
             return false;
         }
 

@@ -64,17 +64,16 @@ public class Main {
                 break;
             }
             Card tempC = null;
-            switch(option){
-                case 1 :
+            // Creating account and customer
+            switch (option) {
+                case 1 -> {
                     String bankName = null;
                     System.out.print(TEXT_CYAN + "Enter customer name : ");
                     input.nextLine();
                     String name = input.nextLine();
                     System.out.print("\nEnter customer age : ");
                     int age = input.nextInt();
-
                     boolean correctOption = false;
-
                     while (!correctOption) {
                         System.out.println(TEXT_BLUE + "\nChoose Bank \n1 for SBI\n2 for ICIC ");
                         int secondOption = input.nextInt();
@@ -90,58 +89,47 @@ public class Main {
                                 tempC = new ICICCard();
                                 correctOption = true;
                             }
-                            default ->
-                                System.out.println(TEXT_RESET + "\nSelect an Appropriate Option!");
+                            default -> System.out.println(TEXT_RESET + "\nSelect an Appropriate Option!");
                         }
                     }
-
                     System.out.println(TEXT_RESET + "\n\nAccount Created successfully... ");
-
-                    if (bankName == "SBI") {
+                    if (bankName.equals("SBI")) {
                         SBI.welcome();
                     } else {
                         ICIC.welcome();
                     }
                     System.out.print("\n\nYour Account Number is : " + tempC.getAccNo());
                     System.out.println("\nYour Pin Number is : " + tempC.getPinNo());
-
-                    // Creating account and customer
                     Account acc = new Account(tempC.getAccNo());
-                    Customer customer = new Customer(name,age,tempC,acc);
-
+                    Customer customer = new Customer(name, age, tempC, acc);
                     allCustomers.add(customer);
                     listOfAccounts.put(new Pair(tempC.getBankName(), tempC.getAccNo()), acc);
                     listOfCards.put(new Pair(tempC.getBankName(), tempC.getAccNo()), tempC);
-
                     FileSystem.StoreDataToFile();
-                    break;
-
-                case 2:
+                }
+                case 2 -> {
                     tempC = Check.checkCardCredentials();
-                    tempC.withDraw();
+                    if(tempC != null) tempC.withDraw();
                     FileSystem.StoreDataToFile();
-                    break;
-
-                case 3 :
+                }
+                case 3 -> {
                     tempC = Check.checkCardCredentials();
-                    tempC.deposit();
+                    if(tempC != null) tempC.deposit();
                     FileSystem.StoreDataToFile();
-                    break;
-
-                case 4 :
+                }
+                case 4 -> {
                     tempC = Check.checkCardCredentials();
-                    tempC.checkBalance();
-                    break;
-
-                case 5 :
+                    if(tempC != null) tempC.checkBalance();
+                }
+                case 5 -> {
                     tempC = Check.checkCardCredentials();
                     Account receiverAccount = Check.checkTransferAccountCredentials();
-                    tempC.transfer(receiverAccount);
+                    if (tempC != null) {
+                        tempC.transfer(receiverAccount);
+                    }
                     FileSystem.StoreDataToFile();
-                    break;
-
-                default:
-                    System.out.println("Enter a valid option!");
+                }
+                default -> System.out.println("Enter a valid option!");
             }
         }
     }

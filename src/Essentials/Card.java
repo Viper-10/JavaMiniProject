@@ -5,7 +5,6 @@ import Runner.Main;
 import Runner.Pair;
 
 import static Runner.Main.*;
-import static Runner.Pair.*;
 
 public interface Card {
     String[] bankName = new String[]{"SBI", "ICIC"};
@@ -22,7 +21,7 @@ public interface Card {
 
     public void resetPin();
 
-    public Account getAcc();
+    Account getAcc();
 
     default void withDraw() {
         synchronized (this) {

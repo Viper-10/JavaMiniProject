@@ -1,9 +1,11 @@
 package Essentials;
 
+import java.io.Serial;
 import java.io.Serializable;
 import static Runner.Colors.*;
 
 public class ICICCard implements Card, Serializable {
+    @Serial
     private static final long serialVersionUID = 6470249712448579374L;
     private int pinNo;
     private final long accNo;
