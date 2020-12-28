@@ -1,5 +1,7 @@
 package Essentials;
 
+import Runner.Main;
+
 import java.io.Serial;
 import java.io.Serializable;
 import static Runner.Colors.*;
@@ -71,7 +73,9 @@ public class ICICCard implements Card, Serializable {
 
     @Override
     public void resetPin() {
-
+        System.out.println("Enter your new PIN number:");
+        int newPin = Main.input.nextInt();
+        setPinNo(newPin);
     }
 
     @Override

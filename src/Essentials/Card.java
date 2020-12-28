@@ -19,7 +19,7 @@ public interface Card {
 
     String getBankName();
 
-    public void resetPin();
+    void resetPin();
 
     Account getAcc();
 
