@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 import static Runner.Colors.*;
 
-
 public class Main {
     public static Scanner input = new Scanner(System.in);
     public static Map<Pair, Account> listOfAccounts = new HashMap<>();
@@ -35,9 +34,9 @@ public class Main {
             }
 
             System.out.println(TEXT_RED + "\n\nALREADY EXISTING ACCOUNTS\n");
+
             for(Pair p:listOfAccounts.keySet())
                 System.out.println(TEXT_YELLOW + "Bank Name: " + TEXT_WHITE + p.bankName + " " + TEXT_YELLOW + " \tAccount Number : " + TEXT_WHITE + listOfAccounts.get(p).getAccNo());
-
             System.out.println("\n");
 
             for(Customer c:allCustomers){
