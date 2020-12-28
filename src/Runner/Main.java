@@ -128,6 +128,15 @@ public class Main {
                     }
                     FileSystem.StoreDataToFile();
                 }
+
+                case 6 -> {
+                    tempC = Check.checkCardCredentials();
+                    if (tempC != null){
+                        tempC.resetPin();
+                    }
+                    FileSystem.StoreDataToFile();
+                    System.out.println(TEXT_PURPLE + "Your PIN number has been changed successfully!!!" + TEXT_RESET);
+                }
                 default -> System.out.println("Enter a valid option!");
             }
         }
