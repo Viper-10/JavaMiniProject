@@ -1,5 +1,6 @@
 package Runner;
 import CustomExceptions.NotEnoughBalanceException;
+import CustomExceptions.UnderAgeException;
 import Essentials.*;
 
 import java.util.HashMap;
@@ -27,21 +28,10 @@ public class Main {
         SBICard.setS_accNo(newNum);
 
         while(true){
-
             try{
                 Thread.sleep(3000);
             } catch(InterruptedException ie){
                 System.out.println(ie);
-            }
-
-            System.out.println(TEXT_RED + "\n\nALREADY EXISTING ACCOUNTS\n");
-
-            for(Pair p:listOfAccounts.keySet())
-                System.out.println(TEXT_YELLOW + "Bank Name: " + TEXT_WHITE + p.bankName + " " + TEXT_YELLOW + " \tAccount Number : " + TEXT_WHITE + listOfAccounts.get(p).getAccNo());
-            System.out.println("\n");
-
-            for(Customer c:allCustomers){
-                System.out.println(TEXT_YELLOW + "Customer Name  : " + TEXT_WHITE + c.getName() + TEXT_YELLOW + " \t--> Account Number: " + TEXT_WHITE + c.getAcc().getAccNo());
             }
 
             System.out.println("\n");
@@ -54,58 +44,23 @@ public class Main {
             System.out.println("4. Check balance");
             System.out.println("5. Transfer");
             System.out.println("6. Reset Pin");
-            System.out.println("7. Exit\n" + TEXT_RESET);
+            System.out.println("7. Print ");
+            System.out.println("8. Exit\n" + TEXT_RESET);
 
             int option = input.nextInt();
             System.out.println();
 
-            if(option == 7) {
-                FileSystem.StoreDataToFile();
-                break;
-            }
             Card tempC = null;
-            // Creating account and customer
+
             switch (option) {
                 case 1 -> {
-                    String bankName = null;
-                    System.out.print(TEXT_CYAN + "Enter customer name : ");
-                    input.nextLine();
-                    String name = input.nextLine();
-                    System.out.print("\nEnter customer age : ");
-                    int age = input.nextInt();
-                    boolean correctOption = false;
-                    while (!correctOption) {
-                        System.out.println(TEXT_BLUE + "\nChoose Bank \n1 for SBI\n2 for ICIC ");
-                        int secondOption = input.nextInt();
-
-                        switch (secondOption) {
-                            case 1 -> {
-                                bankName = "SBI";
-                                tempC = new SBICard();
-                                correctOption = true;
-                            }
-                            case 2 -> {
-                                bankName = "ICIC";
-                                tempC = new ICICCard();
-                                correctOption = true;
-                            }
-                            default -> System.out.println(TEXT_RESET + "\nSelect an Appropriate Option!");
-                        }
+                    try {
+                        createCustomerAndAccount(tempC);
+                    } catch (UnderAgeException e) {
+                        e.printStackTrace();
+                    } finally {
+                        FileSystem.StoreDataToFile();
                     }
-                    System.out.println(TEXT_RESET + "\n\nAccount Created successfully... ");
-                    if (bankName.equals("SBI")) {
-                        SBI.welcome();
-                    } else {
-                        ICIC.welcome();
-                    }
-                    System.out.print("\n\nYour Account Number is : " + tempC.getAccNo());
-                    System.out.println("\nYour Pin Number is : " + tempC.getPinNo());
-                    Account acc = new Account(tempC.getAccNo());
-                    Customer customer = new Customer(name, age, tempC, acc);
-                    allCustomers.add(customer);
-                    listOfAccounts.put(new Pair(tempC.getBankName(), tempC.getAccNo()), acc);
-                    listOfCards.put(new Pair(tempC.getBankName(), tempC.getAccNo()), tempC);
-                    FileSystem.StoreDataToFile();
                 }
                 case 2 -> {
                     tempC = Check.checkCardCredentials();
@@ -150,8 +105,72 @@ public class Main {
                     FileSystem.StoreDataToFile();
                     System.out.println(TEXT_PURPLE + "Your PIN number has been changed successfully!!!" + TEXT_RESET);
                 }
+
+                case 7 ->{
+                    System.out.println(TEXT_RED + "\n\nALREADY EXISTING ACCOUNTS\n");
+
+                    for(Pair p:listOfAccounts.keySet())
+                        System.out.println(TEXT_YELLOW + "Bank Name: " + TEXT_WHITE + p.bankName + " " + TEXT_YELLOW + " \tAccount Number : " + TEXT_WHITE + listOfAccounts.get(p).getAccNo());
+                    System.out.println("\n");
+
+                    for(Customer c:allCustomers){
+                        System.out.println(TEXT_YELLOW + "Customer Name  : " + TEXT_WHITE + c.getName() + TEXT_YELLOW + " \t--> Account Number: " + TEXT_WHITE + c.getAcc().getAccNo());
+                    }
+                }
+
+                case 8 ->{
+                    FileSystem.StoreDataToFile();
+                }
+
                 default -> System.out.println("Enter a valid option!");
             }
         }
+    }
+
+    private static void createCustomerAndAccount(Card tempC) throws UnderAgeException {
+        String bankName = null;
+        System.out.print(TEXT_CYAN + "Enter customer name : ");
+        input.nextLine();
+        String name = input.nextLine();
+        System.out.print("\nEnter customer age : ");
+        int age = input.nextInt();
+
+        if(age < 18) throw new UnderAgeException();
+
+        boolean correctOption = false;
+
+        while (!correctOption) {
+            System.out.println(TEXT_BLUE + "\nChoose Bank \n1 for SBI\n2 for ICIC ");
+            int secondOption = input.nextInt();
+
+            switch (secondOption) {
+                case 1 -> {
+                    bankName = "SBI";
+                    tempC = new SBICard();
+                    correctOption = true;
+                }
+                case 2 -> {
+                    bankName = "ICIC";
+                    tempC = new ICICCard();
+                    correctOption = true;
+                }
+                default -> System.out.println(TEXT_RESET + "\nSelect an Appropriate Option!");
+            }
+        }
+        System.out.println(TEXT_RESET + "\n\nAccount Created successfully... ");
+        if (bankName.equals("SBI")) {
+            SBI.welcome();
+        } else {
+            ICIC.welcome();
+        }
+        System.out.print("\n\nYour Account Number is : " + tempC.getAccNo());
+        System.out.println("\nYour Pin Number is : " + tempC.getPinNo());
+        Account acc = new Account(tempC.getAccNo());
+        Customer customer = new Customer(name, age, tempC, acc);
+        allCustomers.add(customer);
+        listOfAccounts.put(new Pair(tempC.getBankName(), tempC.getAccNo()), acc);
+        listOfCards.put(new Pair(tempC.getBankName(), tempC.getAccNo()), tempC);
+        FileSystem.StoreDataToFile();
+
     }
 }

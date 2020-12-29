@@ -4,11 +4,11 @@ public class UnderAgeException extends Exception{
     static{
         ourMessage = "Your age is under limit\nYou've to be 18 or above to create a bank Account";
     }
-    UnderAgeException(){
+    public UnderAgeException(){
         super(ourMessage);
     }
 
-    UnderAgeException(String message){
+    public UnderAgeException(String message){
         super(message);
     }
 }
