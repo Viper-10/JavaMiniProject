@@ -128,6 +128,7 @@ public class Main {
 
                 case 8 ->{
                     FileSystem.StoreDataToFile();
+                    return;
                 }
 
                 default -> System.out.println("Enter a valid option!");

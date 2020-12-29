@@ -97,6 +97,7 @@ public class ATMThread implements Runnable{
 
             case 8 ->{
                 FileSystem.StoreDataToFile();
+                return;
             }
 
             default -> System.out.println("Enter a valid option!");
