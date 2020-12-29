@@ -13,10 +13,23 @@ public class SBICard implements Card, Serializable {
     private static int s_pinNo;
     private static long s_accNo;
 
+    static{
+        s_pinNo = 1000;
+        s_accNo = 12345678;
+    }
+
+    public static void setS_pinNo(int s_pinNo) {
+        SBICard.s_pinNo = s_pinNo;
+    }
+
     public SBICard() {
         pinNo = ++s_pinNo;
         accNo = ++s_accNo;
         bankName = "SBI";
+    }
+
+    public static void setS_accNo(long s_accNo) {
+        SBICard.s_accNo = s_accNo;
     }
 
     public SBICard(ICICCard copy){
@@ -58,14 +71,6 @@ public class SBICard implements Card, Serializable {
         }
 
         return true;
-    }
-
-    public static void setS_pinNo(int s_pinNo) {
-        SBICard.s_pinNo = s_pinNo;
-    }
-
-    public static void setS_accNo(long s_accNo) {
-        SBICard.s_accNo = s_accNo;
     }
 
 

@@ -1,4 +1,5 @@
 package Runner;
+import CustomExceptions.NotEnoughBalanceException;
 import Essentials.*;
 
 import java.util.HashMap;
@@ -14,7 +15,7 @@ public class Main {
     public static Map<Pair, Card> listOfCards = new HashMap<>();
     public static HashSet<Customer> allCustomers = new HashSet<>();
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws NotEnoughBalanceException {
 
         FileSystem.RetriveDataFromFile();
         //setting up fresh account number to generate
@@ -108,8 +109,15 @@ public class Main {
                 }
                 case 2 -> {
                     tempC = Check.checkCardCredentials();
-                    if(tempC != null) tempC.withDraw();
-                    FileSystem.StoreDataToFile();
+                    if(tempC != null) {
+                        try{
+                            tempC.withDraw();
+                        }catch(NotEnoughBalanceException e){
+                            System.out.println(e);
+                        }finally{
+                            FileSystem.StoreDataToFile();
+                        }
+                    }
                 }
                 case 3 -> {
                     tempC = Check.checkCardCredentials();
@@ -122,11 +130,16 @@ public class Main {
                 }
                 case 5 -> {
                     tempC = Check.checkCardCredentials();
-                    Account receiverAccount = Check.checkTransferAccountCredentials();
                     if (tempC != null) {
-                        tempC.transfer(receiverAccount);
+                        Account receiverAccount = Check.checkTransferAccountCredentials();
+                        try {
+                            tempC.transfer(receiverAccount);
+                        } catch (NotEnoughBalanceException e) {
+                            e.printStackTrace();
+                        } finally {
+                            FileSystem.StoreDataToFile();
+                        }
                     }
-                    FileSystem.StoreDataToFile();
                 }
 
                 case 6 -> {

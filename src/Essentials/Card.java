@@ -1,5 +1,6 @@
 package Essentials;
 
+import CustomExceptions.NotEnoughBalanceException;
 import Runner.Check;
 import Runner.Main;
 import Runner.Pair;
@@ -23,77 +24,74 @@ public interface Card {
 
     Account getAcc();
 
-    default void withDraw() {
+    default void withDraw() throws NotEnoughBalanceException {
         synchronized (this) {
             Account accessedAccount = listOfAccounts.get(new Pair(getBankName(), getAccNo()));
 
             if (accessedAccount != null) {
-                if (accessedAccount.getAccBalance() == 0) {
-                    System.out.println("Your account balance is 0. You have to deposit first!");
-                } else {
-                    System.out.println("Enter amount to withdraw: ");
-                    double withdrawAmount = Main.input.nextDouble();
-                    if (withdrawAmount == 0) {
-                        System.out.println("Aborting withdraw process!!!");
-                    }
-                    double currentBalance = accessedAccount.getAccBalance();
-                    if (currentBalance >= withdrawAmount) {
-                        accessedAccount.setAccBalance(currentBalance - withdrawAmount);
-                        listOfAccounts.replace(new Pair(Check.bankName, Check.accNo), accessedAccount);
-                        System.out.println("Amount " + withdrawAmount + " successfully withdrawn!");
-                    } else {
-                        System.out.println("Your account balance is lower than the entered amount.");
-                        System.out.println("Aborting withdraw process!!!");
-                    }
+                System.out.print("Enter amount to withdraw: ");
+
+                double withdrawAmount = Main.input.nextDouble();
+                double currentBalance = accessedAccount.getAccBalance();
+
+                if (withdrawAmount == 0 || withdrawAmount > currentBalance) {
+                    System.out.println("Your account balance is lower than the entered amount.");
+                    System.out.println("Aborting withdraw process!!!");
+                    throw new NotEnoughBalanceException();
                 }
+
+                accessedAccount.setAccBalance(currentBalance - withdrawAmount);
+                listOfAccounts.replace(new Pair(Check.bankName, Check.accNo), accessedAccount);
+                System.out.println("Amount " + withdrawAmount + " successfully withdrawn!");
             }
         }
     }
 
     default void deposit() {
-            Account accessedAccount = listOfAccounts.get(new Pair(getBankName(), getAccNo()));
-                if (accessedAccount != null) {
-                    System.out.println("Enter amount to deposit: ");
-                    double depositAmount = Main.input.nextDouble();
-                    double currentBalance = accessedAccount.getAccBalance();
-                    accessedAccount.setAccBalance(currentBalance + depositAmount);
-                    System.out.println("An amount of " + depositAmount + " Rs has been deposited successfully!!!");
-                }
+        Account accessedAccount = listOfAccounts.get(new Pair(getBankName(), getAccNo()));
+        if (accessedAccount != null) {
+            System.out.println("Enter amount to deposit: ");
+            double depositAmount = Main.input.nextDouble();
+            double currentBalance = accessedAccount.getAccBalance();
+            accessedAccount.setAccBalance(currentBalance + depositAmount);
+            System.out.println("An amount of " + depositAmount + " Rs has been deposited successfully!!!");
         }
+    }
 
-        default void checkBalance(){
+    default void checkBalance(){
+        Account accessedAccount = listOfAccounts.get(new Pair(getBankName(), getAccNo()));
+        if (accessedAccount != null){
+            double currentBalance = accessedAccount.getAccBalance();
+            System.out.println("Your current balance is " + currentBalance + " Rs.");
+        }
+    }
+    default void transfer (Account receiverAccount) throws NotEnoughBalanceException {
+        synchronized (this) {
             Account accessedAccount = listOfAccounts.get(new Pair(getBankName(), getAccNo()));
-            if (accessedAccount != null){
+
+            if (accessedAccount != null && receiverAccount != null) {
+                System.out.println("Enter amount to be transferred:");
+                double transferAmount = Main.input.nextDouble();
+
+                if (transferAmount == 0) {
+                    System.out.println("Aborting withdraw process!!!");
+                    return;
+                }
                 double currentBalance = accessedAccount.getAccBalance();
-                System.out.println("Your current balance is " + currentBalance + " Rs.");
+                double currentReceiverBalance = receiverAccount.getAccBalance();
+
+                if (transferAmount >= currentBalance){
+                    System.out.println("Aborting withdraw process!!!");
+                    System.out.println("Your account balance is lower than the entered amount");
+                    throw new NotEnoughBalanceException();
+                }
+
+                receiverAccount.setAccBalance(currentReceiverBalance + transferAmount);
+                accessedAccount.setAccBalance(currentBalance - transferAmount);
+                listOfAccounts.replace(new Pair(Check.bankName, Check.accNo), accessedAccount);
+                listOfAccounts.replace(new Pair(Check.receiverBankName, Check.receiverAccountNo), receiverAccount);
+                System.out.println("Amount of Rs. " + transferAmount + " successfully transferred!");
             }
         }
-        default void transfer(Account receiverAccount) {
-            synchronized (this) {
-                Account accessedAccount = listOfAccounts.get(new Pair(getBankName(), getAccNo()));
-
-                if (accessedAccount != null && receiverAccount != null) {
-                    System.out.println("Enter amount to be transferred:");
-                    double transferAmount = Main.input.nextDouble();
-
-                    if (transferAmount == 0) {
-                        System.out.println("Aborting withdraw process!!!");
-                    }
-
-                    double currentBalance = accessedAccount.getAccBalance();
-                    double currentReceiverBalance = receiverAccount.getAccBalance();
-
-                    if (currentBalance >= transferAmount) {
-                        receiverAccount.setAccBalance(currentReceiverBalance + transferAmount);
-                        accessedAccount.setAccBalance(currentBalance - transferAmount);
-                        listOfAccounts.replace(new Pair(Check.bankName, Check.accNo), accessedAccount);
-                        listOfAccounts.replace(new Pair(Check.receiverBankName, Check.receiverAccountNo), receiverAccount);
-                        System.out.println("Amount of Rs. " + transferAmount + " successfully transferred!");
-                    } else {
-                        System.out.println("Your account balance is lower than the entered amount.");
-                        System.out.println("Aborting withdraw process!!!");
-                    }
-                }
-            }
     }
 }

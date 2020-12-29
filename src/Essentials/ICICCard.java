@@ -13,8 +13,13 @@ public class ICICCard implements Card, Serializable {
     private final long accNo;
     private final String bankName;
 
-    private static int s_pinNo;
+    private static  int s_pinNo;
     private static long s_accNo;
+
+    static{
+        s_pinNo = 1000;
+        s_accNo = 12345678;
+    }
 
     public ICICCard() {
         pinNo = ++s_pinNo;
@@ -26,6 +31,14 @@ public class ICICCard implements Card, Serializable {
         this.pinNo = copy.getPinNo();
         this.accNo = copy.getAccNo();
         this.bankName = copy.getBankName();
+    }
+
+    public static void setS_pinNo(int s_pinNo) {
+        ICICCard.s_pinNo = s_pinNo;
+    }
+
+    public static void setS_accNo(long s_accNo) {
+        ICICCard.s_accNo = s_accNo;
     }
 
     public void setPinNo(int pinNo) {
@@ -43,7 +56,6 @@ public class ICICCard implements Card, Serializable {
             System.out.println(TEXT_RED + "ACCESS DENIED , WRONG PIN NUMBER!!!" + TEXT_RESET);
             return false;
         }
-
         return true;
     }
 
@@ -61,15 +73,6 @@ public class ICICCard implements Card, Serializable {
     public long getAccNo() {
         return accNo;
     }
-
-    public static void setS_pinNo(int s_pinNo) {
-        ICICCard.s_pinNo = s_pinNo;
-    }
-
-    public static void setS_accNo(long s_accNo) {
-        ICICCard.s_accNo = s_accNo;
-    }
-
 
     @Override
     public void resetPin() {
