@@ -1,7 +1,8 @@
 package Runner;
-import CustomExceptions.NotEnoughBalanceException;
-import CustomExceptions.UnderAgeException;
+
+import CustomExceptions.*;
 import Essentials.*;
+import Threads.ATMThread;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -16,7 +17,7 @@ public class Main {
     public static Map<Pair, Card> listOfCards = new HashMap<>();
     public static HashSet<Customer> allCustomers = new HashSet<>();
 
-    public static void main(String[] args) throws NotEnoughBalanceException {
+    public static void main(String[] args){
 
         FileSystem.RetriveDataFromFile();
         //setting up fresh account number to generate
@@ -34,10 +35,17 @@ public class Main {
                 System.out.println(ie);
             }
 
-            System.out.println("\n");
-            System.out.println("******************************************************************\n\n");
+            Thread t = new Thread(new ATMThread());
+            t.start();
 
-            System.out.println(TEXT_PURPLE + "Select an option: ");
+            try {
+                t.join();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+            /*System.out.println(TEXT_PURPLE + "Select an option: ");
+
             System.out.println("1. Create Account");
             System.out.println("2. Withdraw");
             System.out.println("3. Deposit");
@@ -99,11 +107,11 @@ public class Main {
 
                 case 6 -> {
                     tempC = Check.checkCardCredentials();
-                    if (tempC != null){
+                    if (tempC != null;){
                         tempC.resetPin();
+                        System.out.println(TEXT_PURPLE + "Your PIN number has been changed successfully!!!" + TEXT_RESET);
                     }
                     FileSystem.StoreDataToFile();
-                    System.out.println(TEXT_PURPLE + "Your PIN number has been changed successfully!!!" + TEXT_RESET);
                 }
 
                 case 7 ->{
@@ -124,10 +132,13 @@ public class Main {
 
                 default -> System.out.println("Enter a valid option!");
             }
-        }
+
+            System.out.println("\n");
+            System.out.println("******************************************************************\n\n");
+        */}
     }
 
-    private static void createCustomerAndAccount(Card tempC) throws UnderAgeException {
+    public static void createCustomerAndAccount(Card tempC) throws UnderAgeException {
         String bankName = null;
         System.out.print(TEXT_CYAN + "Enter customer name : ");
         input.nextLine();
