@@ -35,6 +35,7 @@ public class Main {
                 System.out.println(ie);
             }
 
+/*
             Thread t = new Thread(new ATMThread());
             t.start();
 
@@ -42,9 +43,9 @@ public class Main {
                 t.join();
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            }
+            }*/
 
-            /*System.out.println(TEXT_PURPLE + "Select an option: ");
+            System.out.println(TEXT_PURPLE + "Select an option: ");
 
             System.out.println("1. Create Account");
             System.out.println("2. Withdraw");
@@ -71,47 +72,72 @@ public class Main {
                     }
                 }
                 case 2 -> {
-                    tempC = Check.checkCardCredentials();
-                    if(tempC != null) {
-                        try{
-                            tempC.withDraw();
-                        }catch(NotEnoughBalanceException e){
-                            System.out.println(e);
-                        }finally{
-                            FileSystem.StoreDataToFile();
+                    try {
+                        tempC = Check.checkCardCredentials();
+                        if(tempC != null) {
+                            try{
+                                tempC.withDraw();
+                            }catch(NotEnoughBalanceException e){
+                                System.out.println(e);
+                            }finally{
+                                FileSystem.StoreDataToFile();
+                            }
                         }
+                    } catch (NotCorrectBankException e) {
+                        e.printStackTrace();
                     }
                 }
                 case 3 -> {
-                    tempC = Check.checkCardCredentials();
-                    if(tempC != null) tempC.deposit();
-                    FileSystem.StoreDataToFile();
+                    try {
+                        tempC = Check.checkCardCredentials();
+                        if(tempC != null) tempC.deposit();
+                        FileSystem.StoreDataToFile();
+                    } catch (NotCorrectBankException e) {
+                        e.printStackTrace();
+                    }
                 }
+
                 case 4 -> {
-                    tempC = Check.checkCardCredentials();
-                    if(tempC != null) tempC.checkBalance();
-                }
-                case 5 -> {
-                    tempC = Check.checkCardCredentials();
-                    if (tempC != null) {
-                        Account receiverAccount = Check.checkTransferAccountCredentials();
+                    try {
+                        tempC = Check.checkCardCredentials();
                         try {
-                            tempC.transfer(receiverAccount);
-                        } catch (NotEnoughBalanceException e) {
+                            if(tempC != null) tempC.checkBalance();
+                        } catch (Exception e) {
                             e.printStackTrace();
-                        } finally {
-                            FileSystem.StoreDataToFile();
                         }
+                    } catch (NotCorrectBankException e) {
+                        e.printStackTrace();
+                    }
+                                    }
+                case 5 -> {
+                    try {
+                        tempC = Check.checkCardCredentials();
+                        if (tempC != null) {
+                            Account receiverAccount = Check.checkTransferAccountCredentials();
+                            try {
+                                tempC.transfer(receiverAccount);
+                            } catch (NotEnoughBalanceException e) {
+                                e.printStackTrace();
+                            } finally {
+                                FileSystem.StoreDataToFile();
+                            }
+                        }
+                    } catch (NotCorrectBankException e) {
+                        e.printStackTrace();
                     }
                 }
 
                 case 6 -> {
-                    tempC = Check.checkCardCredentials();
-                    if (tempC != null;){
-                        tempC.resetPin();
-                        System.out.println(TEXT_PURPLE + "Your PIN number has been changed successfully!!!" + TEXT_RESET);
+                    try {
+                        tempC = Check.checkCardCredentials();
+                        if (tempC != null){
+                            tempC.resetPin();
+                            System.out.println(TEXT_PURPLE + "Your PIN number has been changed successfully!!!" + TEXT_RESET);
+                        }
+                        FileSystem.StoreDataToFile();
+                    }catch (NotCorrectBankException e) {
+                        e.printStackTrace();
                     }
-                    FileSystem.StoreDataToFile();
                 }
 
                 case 7 ->{
@@ -136,7 +162,7 @@ public class Main {
 
             System.out.println("\n");
             System.out.println("******************************************************************\n\n");
-        */}
+        }
     }
 
     public static void createCustomerAndAccount(Card tempC) throws UnderAgeException {

@@ -6,7 +6,10 @@ public class Person  implements Serializable {
     private static final long serialVersionUID = 330484899860391459L;
     private String name;
     private int age;
-
+    public Person(){
+        name = null;
+        age = 0;
+    }
     public Person(String name, int age) {
         this.name = name;
         this.age = age;

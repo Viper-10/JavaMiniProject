@@ -32,6 +32,4 @@ public class Account implements Serializable {
     public long getAccNo() {
         return accNo;
     }
-
-
 }
